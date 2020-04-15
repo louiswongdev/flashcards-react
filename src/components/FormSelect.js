@@ -128,9 +128,10 @@ const FormSelect = ({ categories }) => {
             <Select
               name="difficulty"
               id="difficulty"
-              defaultValue="medium"
+              defaultValue=""
               onChange={(e) => handleDifficultyChange(e.target.value)}
             >
+              <option value="">Random</option>
               <option value="easy">Easy</option>
               <option value="medium">Medium</option>
               <option value="hard">Hard</option>

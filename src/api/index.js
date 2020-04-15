@@ -13,7 +13,7 @@ let res;
 
 export async function fetchFlashcards(
   category = 9,
-  difficulty = 'medium',
+  difficulty = null,
   count = 10
 ) {
   try {
