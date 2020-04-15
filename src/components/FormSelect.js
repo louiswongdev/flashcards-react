@@ -7,12 +7,13 @@ const Select = styled.select`
   display: block;
   font-size: 16px;
   font-family: sans-serif;
-  font-weight: 700;
+  font-weight: 500;
   color: #444;
   line-height: 1.3;
   padding: 0.6em 1.4em 0.5em 0.8em;
   width: 100%;
   max-width: 100%;
+  min-width: 110px;
   box-sizing: border-box;
   margin: 0;
   border: 1px solid #aaa;
@@ -27,6 +28,14 @@ const Select = styled.select`
   background-repeat: no-repeat, repeat;
   background-position: right 0.7em top 50%, 0 0;
   background-size: 0.65em auto, 100%;
+
+  @media (max-width: 1090px) {
+    width: 400px;
+  }
+
+  @media (max-width: 480px) {
+    width: 300px;
+  }
 `;
 
 const FormSection = styled.form`
@@ -37,7 +46,28 @@ const FormSection = styled.form`
   box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.3);
   margin-bottom: 2rem;
   background-color: #f2c14e;
-  /* width: 100%; */
+  min-height: 6rem;
+  padding: 0 2rem;
+`;
+
+const FormContainer = styled.div`
+  width: 1200px;
+  display: flex;
+  align-items: center;
+
+  @media (max-width: 1090px) {
+    flex-direction: column;
+  }
+`;
+
+const Logo = styled.div`
+  font-size: 2rem;
+  margin-right: auto;
+  padding: 0 2rem;
+
+  @media (max-width: 1090px) {
+    padding-top: 2rem;
+  }
 `;
 
 const FormGroup = styled.div`
@@ -46,7 +76,7 @@ const FormGroup = styled.div`
   margin: 0.5rem;
 
   & > label {
-    color: #fff;
+    color: #333;
     font-size: 0.75rem;
     margin-bottom: 0.25rem;
   }
@@ -54,53 +84,77 @@ const FormGroup = styled.div`
 
 const SubmitButton = styled.button`
   cursor: pointer;
-  padding: 10px 20px;
+  padding: 0.7rem 2.2rem;
   background: #333;
   color: white;
   font-size: 1rem;
   margin-top: 17px;
   border: none;
+  border-radius: 0.5em;
+
+  @media (max-width: 1090px) {
+    margin-top: 0;
+  }
 `;
 
 const FormSelect = ({ categories }) => {
-  const { handleCategoryChange, handleCountChange, handleSubmit } = useContext(
-    GlobalContext
-  );
+  const {
+    handleCategoryChange,
+    handleCountChange,
+    handleDifficultyChange,
+    handleSubmit,
+  } = useContext(GlobalContext);
   return (
     <>
       <FormSection onSubmit={handleSubmit}>
-        <FormGroup>
-          <label htmlFor="category">Category</label>
-          <Select
-            name="category"
-            id="category"
-            onChange={(e) => handleCategoryChange(e.target.value)}
-          >
-            {categories.map((category, i) => (
-              <option key={i} value={category.id}>
-                {category.name}
-              </option>
-            ))}
-          </Select>
-        </FormGroup>
-        <FormGroup>
-          <label htmlFor="count">Number of Questions</label>
-          <Select
-            name="number"
-            id="number"
-            defaultValue="10"
-            onChange={(e) => handleCountChange(e.target.value)}
-          >
-            {Array.from({ length: 20 }, (v, i) => i).map((num, i) => (
-              <option key={i} value={num + 1}>
-                {num + 1}
-              </option>
-            ))}
-          </Select>
-        </FormGroup>
-        <FormGroup>
-          <SubmitButton>Generate</SubmitButton>
-        </FormGroup>
+        <FormContainer>
+          <Logo>Flashcard Quiz</Logo>
+          <FormGroup>
+            <label htmlFor="category">Category</label>
+            <Select
+              name="category"
+              id="category"
+              onChange={(e) => handleCategoryChange(e.target.value)}
+            >
+              {categories.map((category, i) => (
+                <option key={i} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
+          <FormGroup>
+            <label htmlFor="difficulty">Difficulty</label>
+            <Select
+              name="difficulty"
+              id="difficulty"
+              defaultValue="medium"
+              onChange={(e) => handleDifficultyChange(e.target.value)}
+            >
+              <option value="easy">Easy</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard</option>
+            </Select>
+          </FormGroup>
+          <FormGroup>
+            <label htmlFor="count">Number of Questions</label>
+            <Select
+              name="number"
+              id="number"
+              defaultValue="10"
+              onChange={(e) => handleCountChange(e.target.value)}
+            >
+              {Array.from({ length: 20 }, (v, i) => i).map((num, i) => (
+                <option key={i} value={num + 1}>
+                  {num + 1}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
+          <FormGroup>
+            <SubmitButton>Generate</SubmitButton>
+          </FormGroup>
+        </FormContainer>
       </FormSection>
     </>
   );

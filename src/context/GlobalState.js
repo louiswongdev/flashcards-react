@@ -1,18 +1,13 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { fetchFlashcards, fetchCategories } from '../api';
 
-// Initial State
-// const initialState = {
-//   flashcards: [],
-//   categories: [],
-// };
-
 const GlobalContext = createContext();
 
 const GlobalProvider = ({ children }) => {
   const [flashcards, setFlashcards] = useState([]);
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState();
+  const [difficulty, setDifficulty] = useState();
   const [count, setCount] = useState();
   const [loading, setLoading] = useState(true);
   // const [error, setError] = useState();
@@ -41,11 +36,15 @@ const GlobalProvider = ({ children }) => {
     setCount(count);
   };
 
+  const handleDifficultyChange = (difficulty) => {
+    setDifficulty(difficulty);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const fetchAPI = async () => {
-      setFlashcards(await fetchFlashcards(category, count));
+      setFlashcards(await fetchFlashcards(category, difficulty, count));
       setLoading(false);
     };
     fetchAPI();
@@ -58,6 +57,7 @@ const GlobalProvider = ({ children }) => {
         categories,
         loading,
         handleCategoryChange,
+        handleDifficultyChange,
         handleCountChange,
         handleSubmit,
         setCategory,

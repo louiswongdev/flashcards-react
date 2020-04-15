@@ -7,35 +7,29 @@ const sharedCard = css`
   backface-visibility: hidden;
   transform-style: preserve-3d;
   background-color: #fff;
+  border-radius: 1rem;
 `;
 
 const Card = styled.div`
   cursor: pointer;
   display: grid;
-  /* background-color: #fff; */
-  /* display: flex; */
   justify-content: center;
   align-items: center;
-  border-radius: 0.25rem;
-  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2);
+  border-radius: 1rem;
   transform-style: preserve-3d;
   transform: perspective(1000px) translateY(var(--translate-y, 0))
-    ${({ flipped }) =>
-      // flipped ? `rotateY(var(--rotate-y, 0))` : `--rotate-y: 180deg`};
-      flipped ? `rotateY(180deg)` : `rotateY(0)`};
+    ${({ flipped }) => (flipped ? `rotateY(180deg)` : `rotateY(0)`)};
   transition: all 0.2s;
   position: relative;
 
   &:hover {
     --translate-y: -2px;
-    box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.3);
   }
 `;
 
 const CardFront = styled.div`
   ${sharedCard}
   left: 0;
-  font-size: 1.3rem;
   width: 100%;
 `;
 
@@ -62,7 +56,7 @@ const FlashcardOptions = styled.div`
 const FlashcardOption = styled.div`
   margin-top: 0.25rem;
   color: #565656;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 
   &:first-child {
     margin-top: 0;
@@ -70,7 +64,7 @@ const FlashcardOption = styled.div`
 `;
 
 const FlashcardQuestion = styled.div`
-  /* min-width: 280px; */
+  font-size: 1.2rem;
 `;
 
 const Flashcard = ({ flashcard }) => {

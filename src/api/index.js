@@ -9,20 +9,31 @@ function decodeHtml(html) {
   textArea.innerHTML = html;
   return textArea.value;
 }
+let res;
 
-export async function fetchFlashcards(category = 9, count = 10) {
-  // const [flashcards, setFlashcards] = useState([]);
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState();
-  // console.log(category, 'category');
-  console.log(count, 'count');
+export async function fetchFlashcards(
+  category = 9,
+  difficulty = 'medium',
+  count = 10
+) {
   try {
-    const res = await axios.get(API_URL, {
-      params: {
-        category,
-        amount: count,
-      },
-    });
+    if (category === '30') {
+      res = await axios.get(API_URL, {
+        params: {
+          amount: count,
+          category,
+        },
+      });
+    } else {
+      res = await axios.get(API_URL, {
+        params: {
+          category,
+          amount: count,
+          difficulty,
+        },
+      });
+    }
+    console.log(res.data.results, 'returned res');
     const modifiedData = res.data.results.map((questionItem, index) => {
       const answer = decodeHtml(questionItem.correct_answer);
       const options = [
@@ -36,7 +47,6 @@ export async function fetchFlashcards(category = 9, count = 10) {
         options: options.sort(() => Math.random() - 0.5),
       };
     });
-    console.log(modifiedData, 'modifiedData');
     return modifiedData;
   } catch (error) {
     console.log(error.response);
@@ -55,36 +65,3 @@ export const fetchCategories = async () => {
     console.log(error);
   }
 };
-
-// export function useFlashcardAPICategories() {
-//   const [categories, setCategories] = useState([]);
-
-//   useEffect(() => {
-//     async function fetchCategories() {
-//       try {
-//         const res = await axios.get(API_CAT_URL);
-//         console.log(res.data.trivia_categories, 'res');
-//         setCategories(res);
-//       } catch (error) {
-//         console.log(error);
-//       }
-//     }
-//     fetchCategories();
-//   }, []);
-// }
-
-// setFlashcards(
-//   res.data.results.map((questionItem, index) => {
-//     const answer = decodeHtml(questionItem.correct_answer);
-//     const options = [
-//       ...questionItem.incorrect_answers.map((a) => decodeHtml(a)),
-//       answer,
-//     ];
-//     return {
-//       id: `${index}-${Date.now()}`,
-//       question: decodeHtml(questionItem.question),
-//       answer: answer,
-//       options: options.sort(() => Math.random() - 0.5),
-//     };
-//   })
-// );
