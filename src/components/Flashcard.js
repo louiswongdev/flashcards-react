@@ -55,7 +55,7 @@ const FlashcardOptions = styled.div`
 
 const FlashcardOption = styled.div`
   margin-top: 0.25rem;
-  color: #565656;
+  color: #686868;
   font-size: 1.1rem;
 
   &:first-child {

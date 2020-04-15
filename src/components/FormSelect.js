@@ -142,7 +142,7 @@ const FormSelect = ({ categories }) => {
             <Select
               name="number"
               id="number"
-              defaultValue="10"
+              defaultValue="9"
               onChange={(e) => handleCountChange(e.target.value)}
             >
               {Array.from({ length: 20 }, (v, i) => i).map((num, i) => (

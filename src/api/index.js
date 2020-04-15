@@ -14,7 +14,7 @@ let res;
 export async function fetchFlashcards(
   category = 9,
   difficulty = null,
-  count = 10
+  count = 9
 ) {
   try {
     // category 30 (Gadgets) won't pull data from API if it has difficulty in search params
@@ -36,6 +36,7 @@ export async function fetchFlashcards(
     }
     console.log(res.data.results, 'returned res');
     const modifiedData = res.data.results.map((questionItem, index) => {
+      let counter = 0;
       const answer = decodeHtml(questionItem.correct_answer);
       const options = [
         ...questionItem.incorrect_answers.map((a) => decodeHtml(a)),
@@ -45,7 +46,9 @@ export async function fetchFlashcards(
         id: `${index}-${Date.now()}`,
         question: decodeHtml(questionItem.question),
         answer: answer,
-        options: options.sort(() => Math.random() - 0.5),
+        options: options
+          .sort(() => Math.random() - 0.5)
+          .map((q) => `${(counter += 1)}) ${decodeHtml(q)}`),
       };
     });
     return modifiedData;
