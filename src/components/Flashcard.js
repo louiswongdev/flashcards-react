@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 
 const sharedCard = css`
   grid-area: 1 / 1 / 2 / 2;
-  padding: 2rem 3rem;
+  padding: 2rem;
   backface-visibility: hidden;
   transform-style: preserve-3d;
   background-color: #fff;
@@ -35,7 +35,8 @@ const Card = styled.div`
 const CardFront = styled.div`
   ${sharedCard}
   left: 0;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
+  width: 100%;
 `;
 
 const CardBack = styled.div`
@@ -68,13 +69,17 @@ const FlashcardOption = styled.div`
   }
 `;
 
+const FlashcardQuestion = styled.div`
+  /* min-width: 280px; */
+`;
+
 const Flashcard = ({ flashcard }) => {
   const [flip, setFlip] = useState(false);
 
   return (
     <Card onClick={() => setFlip(!flip)} flipped={flip}>
       <CardFront>
-        {flashcard.question}
+        <FlashcardQuestion>{flashcard.question}</FlashcardQuestion>
         <FlashcardOptions>
           {flashcard.options.map((option) => (
             <FlashcardOption key={option}>{option}</FlashcardOption>

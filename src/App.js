@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 
 import styled from 'styled-components';
 import { GlobalStyle } from './styles/GlobalStyle';
 import FlashcardList from './components/FlashcardList';
 import { useFlashcardsAPI } from './api';
 import FormSelect from './components/FormSelect';
+import { GlobalContext } from './context/GlobalState';
 
 const Container = styled.div`
   max-width: 1200px;
@@ -15,20 +16,16 @@ const Container = styled.div`
 `;
 
 function App() {
-  const { flashcards, loading, error } = useFlashcardsAPI();
-  // console.log(data);
-  // if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error...</p>;
-
+  const { loading, flashcards, categories } = useContext(GlobalContext);
   return (
     <>
       <GlobalStyle />
+      <FormSelect categories={categories} />
       <Container>
         {loading ? (
           <p>Loading...</p>
         ) : (
           <>
-            <FormSelect />
             <FlashcardList flashcards={flashcards} />
           </>
         )}
