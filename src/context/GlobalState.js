@@ -43,6 +43,7 @@ const GlobalProvider = ({ children }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    setLoading(true);
     const fetchAPI = async () => {
       setFlashcards(await fetchFlashcards(category, difficulty, count));
       setLoading(false);
