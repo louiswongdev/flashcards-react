@@ -17,6 +17,7 @@ export async function fetchFlashcards(
   count = 10
 ) {
   try {
+    // category 30 (Gadgets) won't pull data from API if it has difficulty in search params
     if (category === '30') {
       res = await axios.get(API_URL, {
         params: {
