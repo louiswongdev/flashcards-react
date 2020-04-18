@@ -13,7 +13,7 @@ const Select = styled.select`
   padding: 0.6em 1.4em 0.5em 0.8em;
   width: 100%;
   max-width: 100%;
-  min-width: 110px;
+  min-width: ${({ name }) => (name === 'category' ? `335px` : `110px`)};
   box-sizing: border-box;
   margin: 0;
   border: 1px solid #aaa;
