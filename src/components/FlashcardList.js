@@ -39,7 +39,7 @@ const FlashcardList = ({ flashcards }) => {
       ) : (
         <NothingFound>
           <p>
-            Sorry no flashcards were found. Please select another Category
+            Sorry no more flashcards were found. Please select another Category
             and/or difficulty
           </p>
         </NothingFound>

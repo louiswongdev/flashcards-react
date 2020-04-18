@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const API_URL = 'https://opentdb.com/api.php';
 const API_CAT_URL = 'https://opentdb.com/api_category.php';
+const API_SESSION_URL = 'https://opentdb.com/api_token.php?command=request';
 
 function decodeHtml(html) {
   const textArea = document.createElement('textarea');
@@ -14,7 +14,8 @@ let res;
 export async function fetchFlashcards(
   category = 9,
   difficulty = null,
-  count = 9
+  count = 9,
+  token
 ) {
   try {
     // category 30 (Gadgets) won't pull data from API if it has difficulty in search params
@@ -23,6 +24,7 @@ export async function fetchFlashcards(
         params: {
           amount: count,
           category,
+          token,
         },
       });
     } else {
@@ -31,10 +33,11 @@ export async function fetchFlashcards(
           category,
           amount: count,
           difficulty,
+          token,
         },
       });
     }
-    console.log(res.data.results, 'returned res');
+    console.log(res.data, 'returned res');
     const modifiedData = res.data.results.map((questionItem, index) => {
       let counter = 0;
       const answer = decodeHtml(questionItem.correct_answer);
@@ -65,6 +68,18 @@ export const fetchCategories = async () => {
 
     // return trivia_categories.map((category) => category.name);
     return trivia_categories;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const fetchSessionToken = async () => {
+  try {
+    const {
+      data: { token },
+    } = await axios.get(API_SESSION_URL);
+
+    return token;
   } catch (error) {
     console.log(error);
   }

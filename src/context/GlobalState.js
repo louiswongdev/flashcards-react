@@ -1,9 +1,10 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { fetchFlashcards, fetchCategories } from '../api';
+import { fetchFlashcards, fetchCategories, fetchSessionToken } from '../api';
 
 const GlobalContext = createContext();
 
 const GlobalProvider = ({ children }) => {
+  const [sessionToken, setSessionToken] = useState();
   const [flashcards, setFlashcards] = useState([]);
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState();
@@ -13,20 +14,26 @@ const GlobalProvider = ({ children }) => {
   // const [error, setError] = useState();
 
   useEffect(() => {
-    const fetchAPI = async () => {
-      setFlashcards(await fetchFlashcards());
-      setLoading(false);
+    const fetchInitialData = async () => {
+      setCategories(await fetchCategories());
+      setSessionToken(await fetchSessionToken());
     };
-    fetchAPI();
-  }, [setFlashcards, setLoading]);
+    fetchInitialData();
+  }, []);
 
   useEffect(() => {
-    const fetchCatAPI = async () => {
-      setCategories(await fetchCategories());
+    const fetchCards = async () => {
+      setFlashcards(
+        await fetchFlashcards(category, difficulty, count, sessionToken)
+      );
+      setLoading(false);
     };
 
-    fetchCatAPI();
-  }, []);
+    if (sessionToken !== undefined) {
+      fetchCards();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sessionToken]);
 
   const handleCategoryChange = (category) => {
     setCategory(category);
@@ -45,7 +52,9 @@ const GlobalProvider = ({ children }) => {
 
     setLoading(true);
     const fetchAPI = async () => {
-      setFlashcards(await fetchFlashcards(category, difficulty, count));
+      setFlashcards(
+        await fetchFlashcards(category, difficulty, count, sessionToken)
+      );
       setLoading(false);
     };
     fetchAPI();

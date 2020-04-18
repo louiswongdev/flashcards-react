@@ -40,6 +40,8 @@ const CardBack = styled.div`
   text-align: center;
   font-size: 2.2rem;
   align-self: stretch;
+  background: #00bcd4;
+  color: #fff;
 `;
 
 const CardBackContent = styled.div`

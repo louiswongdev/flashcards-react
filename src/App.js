@@ -11,6 +11,7 @@ import FormSelect from './components/FormSelect';
 const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
+  padding: 2rem 0;
   display: grid;
   justify-content: center;
   align-items: center;
