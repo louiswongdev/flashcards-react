@@ -37,7 +37,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    background: #595959;
+    background: #2d2d2d;
     font-family: Arial, Helvetica, sans-serif;
   }
 `;

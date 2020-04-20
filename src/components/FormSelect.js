@@ -64,6 +64,7 @@ const Logo = styled.div`
   font-size: 2rem;
   margin-right: auto;
   padding: 0 2rem;
+  font-family: 'Bangers', cursive;
 
   @media (max-width: 1090px) {
     padding-top: 2rem;
